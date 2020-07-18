@@ -47,3 +47,23 @@ class TestMaid(TestCase):
         self.assertEqual(maid.profile_image.name, 'profile.png')
 
         os.remove('profile.png')
+
+    def test_model_should_have_modified_and_created_field(self):
+        # Given
+        mock = MagicMock(spec=File)
+        mock.name = 'profile.png'
+
+        Maid.objects.create(
+            name='BB',
+            profile_image=mock,
+            birthdate=date(1998,4,29),
+            description='Super Maid of the Year',
+            certificate='Best Maid 2012',
+            salary=3000
+        )
+        # When
+        maid = Maid.objects.last()
+        # Then
+        self.assertTrue(maid.created)
+        self.assertTrue(maid.modified)
+
