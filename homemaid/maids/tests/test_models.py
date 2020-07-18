@@ -22,11 +22,19 @@ class TestMaid(TestCase):
         # When
         maid = Maid.objects.last()
         # Then
-        self.assertEqual(maid.name, 'BB')
-        self.assertEqual(maid.birthdate, date(1998,4,29))
-        self.assertEqual(maid.description, 'Super Maid of the Year')
-        self.assertEqual(maid.certificate, 'Best Maid 2012')
-        self.assertEqual(maid.salary, 3000)
+        # unittest style
+        # self.assertEqual(maid.name, 'BB')
+        # self.assertEqual(maid.birthdate, date(1998,4,29))
+        # self.assertEqual(maid.description, 'Super Maid of the Year')
+        # self.assertEqual(maid.certificate, 'Best Maid 2012')
+        # self.assertEqual(maid.salary, 3000)
+
+        # pytest style
+        assert maid.name == 'BB'
+        assert maid.birthdate == date(1998,4,29)
+        assert maid.description == 'Super Maid of the Year'
+        assert maid.certificate == 'Best Maid 2012'
+        assert maid.salary == 3000
 
     def test_model_should_have_image_fields(self):
         # Given
@@ -44,8 +52,8 @@ class TestMaid(TestCase):
         # When
         maid = Maid.objects.last()
         # Then
-        self.assertEqual(maid.profile_image.name, 'profile.png')
-
+        # self.assertEqual(maid.profile_image.name, 'profile.png')
+        assert maid.profile_image.name == 'profile.png'
         os.remove('profile.png')
 
     def test_model_should_have_modified_and_created_field(self):
@@ -64,6 +72,12 @@ class TestMaid(TestCase):
         # When
         maid = Maid.objects.last()
         # Then
-        self.assertTrue(maid.created)
-        self.assertTrue(maid.modified)
+
+        # unittest style
+        # self.assertTrue(maid.created)
+        # self.assertTrue(maid.modified)
+
+        # pytest style
+        assert maid.created is not None
+        assert maid.modified is not None
 
